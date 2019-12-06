@@ -1,0 +1,5 @@
+.table-cell{
+    -fx-text-fill: -fx-selection-bar-text;
+    -fx-font-size: 12;
+    -fx-font-family: "Arial";
+}

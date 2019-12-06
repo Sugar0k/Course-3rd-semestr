@@ -1,0 +1,11 @@
+VBox{
+    -fx-background-color: #222226;
+}
+
+VBox HBox Label {
+    -fx-text-fill: #fafafa;
+}
+
+VBox HBox .check-box{
+    -fx-text-fill: #fafafa;
+}
