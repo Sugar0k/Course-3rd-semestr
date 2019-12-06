@@ -11,7 +11,7 @@ import static aFiles.assistsFiles.Global.*;
 
 public class Main extends Application {
 
-    //make same test
+    //make same test asdasds
 
     public static void programClose(){
       //  if()
