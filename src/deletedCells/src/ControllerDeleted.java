@@ -4,7 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import Change.src.ControllerChange;
-import aFiles.assistsFiles.TCell;
+import aFiles.Worker;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,7 +29,7 @@ public class ControllerDeleted {
     private URL location;
 
     @FXML
-    private TableView<TCell> tableView;
+    private TableView<Worker> tableView;
 
     @FXML
     private Button openMainWindow;
@@ -53,13 +53,13 @@ public class ControllerDeleted {
             public void handle(MouseEvent mouseEvent) {
                 int selectedIndex = gTrashTable.getSelectionModel().getSelectedIndex();
                 if (mouseEvent.getClickCount() == 2 && (selectedIndex >= 0)){
-                    TCell cell = (TCell) gTrashTable.getItems().get(selectedIndex);
+                    Worker cell = (Worker) gTrashTable.getItems().get(selectedIndex);
                     if (cell != null){
                         FXMLLoader loader = new FXMLLoader();
                         Stage dialogStage = createCW(gBinWindow, loader);
                         ControllerChange controller = loader.getController();
                         controller.setDialogStage(dialogStage);
-                        controller.settCell((TCell) gTrashTable.getItems().get(selectedIndex), false);
+                        controller.settCell((Worker) gTrashTable.getItems().get(selectedIndex), false);
                         dialogStage.showAndWait();
                         gTrashTable.refresh();
                     }
@@ -77,10 +77,10 @@ public class ControllerDeleted {
         addToMain.setOnAction(actionEvent -> {
             int selectedIndex = gTrashTable.getSelectionModel().getSelectedIndex();
             if (selectedIndex >= 0) {
-                TCell temp = (TCell) gTrashTable.getItems().get(selectedIndex);
+                Worker temp = (Worker) gTrashTable.getItems().get(selectedIndex);
                 if (gCompany.add(temp)){
                     gIsSave.setText("Не сохранено");
-                    gMainTable.getItems().add(new TCell(1, temp));
+                    gMainTable.getItems().add(temp);
                     gTrashList.remove(temp);
                     gTrashTable.getItems().remove(selectedIndex);
                 } else {
@@ -104,7 +104,7 @@ public class ControllerDeleted {
         deleteFinal.setOnAction(actionEvent -> {
             int selectedIndex = gTrashTable.getSelectionModel().getSelectedIndex();
             if (selectedIndex >= 0) {
-                TCell temp = (TCell) gTrashTable.getItems().get(selectedIndex);
+                Worker temp = (Worker) gTrashTable.getItems().get(selectedIndex);
                 gTrashList.remove(temp);
                 gTrashTable.getItems().remove(selectedIndex);
 

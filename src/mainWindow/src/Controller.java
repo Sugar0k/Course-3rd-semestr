@@ -7,8 +7,6 @@ import java.util.ResourceBundle;
 import Change.src.ControllerChange;
 import aFiles.Company;
 import aFiles.Worker;
-import aFiles.assistsFiles.TCell;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -70,7 +68,7 @@ public class Controller {
     private Label forError;
 
     @FXML
-    private TableView<TCell> tableView;
+    private TableView<Worker> tableView;
 
     @FXML
     private Label isSave;
@@ -83,8 +81,6 @@ public class Controller {
 
     @FXML
     private Button deleteWorker;
-
-    int count = 0;
 
     @FXML
     void initialize() {
@@ -103,14 +99,14 @@ public class Controller {
             public void handle(MouseEvent mouseEvent) {
                 int selectedIndex = gMainTable.getSelectionModel().getSelectedIndex();
                 if (mouseEvent.getClickCount() == 2 && (selectedIndex >= 0)){
-                    TCell cell = (TCell) gMainTable.getItems().get(selectedIndex);
+                    Worker cell = (Worker) gMainTable.getItems().get(selectedIndex);
                     if (cell != null){
                         FXMLLoader loader = new FXMLLoader();
                         Stage dialogStage = createCW(gMainWindow, loader);
                         //gChangeWindow = newWindow2;
                         ControllerChange controller = loader.getController();
                         controller.setDialogStage(dialogStage);
-                        controller.settCell((TCell) gMainTable.getItems().get(selectedIndex), true);
+                        controller.settCell((Worker) gMainTable.getItems().get(selectedIndex), true);
                         dialogStage.showAndWait();
                         gMainTable.refresh();
                     }
@@ -141,7 +137,7 @@ public class Controller {
                         addDepartment.getText());
                 if (gCompany.add(temp)){
                     isSave.setText("Не сохранено");
-                    gMainTable.getItems().add(new TCell(++count, temp));
+                    gMainTable.getItems().add(temp);
                     forError.setText("");
                 } else {
                     forError.setText("ID должен быть уникальным");
@@ -155,7 +151,7 @@ public class Controller {
             int selectedIndex = gMainTable.getSelectionModel().getSelectedIndex();
             if (selectedIndex >= 0) {
                 isSave.setText("Не сохранено");
-                TCell temp = (TCell) gMainTable.getItems().get(selectedIndex);
+                Worker temp = (Worker) gMainTable.getItems().get(selectedIndex);
                 gTrashList.add(temp);
                 gTrashTable.getItems().add(temp);
                 gCompany.del(temp.id);
@@ -181,7 +177,7 @@ public class Controller {
                     gCompany = (Company) inputStream.readObject();
                     gMainTable.getItems().clear();
                     for (Worker wr : gCompany.getMap().values())
-                        gMainTable.getItems().add(new TCell(1, wr));
+                        gMainTable.getItems().add(wr);
                     isSave.setText("Сохранено");
                 } catch (StreamCorruptedException e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);

@@ -3,7 +3,7 @@ package Change.src;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import aFiles.assistsFiles.TCell;
+import aFiles.Worker;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -45,7 +45,7 @@ public class ControllerChange {
     private Button changeF;
 
     private Stage dialogStage;
-    private TCell tCell;
+    private Worker worker;
     private boolean okClicked = false;
     private boolean chek = false;
 
@@ -66,15 +66,15 @@ public class ControllerChange {
         this.dialogStage = dialogStage;
     }
 
-    public void settCell(TCell tCell, boolean b) {
+    public void settCell(Worker worker, boolean b) {
         chek = b;
-        this.tCell = tCell;
-        fName.setText(tCell.getFName());
-        lName.setText(tCell.getLName());
-        sName.setText(tCell.getSName());
-        ID.setText(Integer.toString(tCell.getId()));
-        salary.setText(Integer.toString(tCell.getSalary()));
-        department.setText(tCell.getDepartment());
+        this.worker = worker;
+        fName.setText(worker.getFName());
+        lName.setText(worker.getLName());
+        sName.setText(worker.getSName());
+        ID.setText(Integer.toString(worker.getId()));
+        salary.setText(Integer.toString(worker.getSalary()));
+        department.setText(worker.getDepartment());
     }
 
     public boolean isOkClicked() {
@@ -83,18 +83,18 @@ public class ControllerChange {
 
     @FXML
     private void handleOk() {
-        tCell.setfName(fName.getText());
-        tCell.setlName(lName.getText());
-        tCell.setsName(sName.getText());
-        tCell.setSalary(Integer.parseInt(salary.getText()));
-        tCell.setDepartment(department.getText());
+        worker.setfName(fName.getText());
+        worker.setlName(lName.getText());
+        worker.setsName(sName.getText());
+        worker.setSalary(Integer.parseInt(salary.getText()));
+        worker.setDepartment(department.getText());
 
-        if (chek && !(tCell.id == Integer.parseInt(ID.getText()))) {
-            gCompany.del(tCell.id);
-            tCell.setId(Integer.parseInt(ID.getText()));
-            gCompany.add(tCell);
+        if (chek && !(worker.id == Integer.parseInt(ID.getText()))) {
+            gCompany.del(worker.id);
+            worker.setId(Integer.parseInt(ID.getText()));
+            gCompany.add(worker);
         } else {
-            tCell.setId(Integer.parseInt(ID.getText()));
+            worker.setId(Integer.parseInt(ID.getText()));
         }
 
 
@@ -134,7 +134,7 @@ public class ControllerChange {
 
 
         try {
-            if (!(tCell.id == Integer.parseInt(ID.getText())))
+            if (!(worker.id == Integer.parseInt(ID.getText())))
                 if (chek && gCompany.contains(Integer.parseInt(ID.getText()))) {
                     errorMessage = "Требуеться уникальный ID!";
                 }

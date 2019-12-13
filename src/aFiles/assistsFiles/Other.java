@@ -23,12 +23,6 @@ import static aFiles.assistsFiles.Global.gBinWindow;
 public class Other {
 
     public static TableView initializeTable(TableView tableView, boolean sortable){
-        TableColumn<Integer, Worker> column = new TableColumn<>("№");
-        column.setSortable(false);
-        column.setVisible(false);
-        column.setCellValueFactory(new PropertyValueFactory<>("index"));
-        tableView.getColumns().add(column);
-        //addColumnI(tableView, "№", "index");
         addColumnI(tableView, "ID", "id", sortable);
         addColumnS(tableView, "Фамилия", "lName", sortable);
         addColumnS(tableView, "Имя", "fName", sortable);
@@ -38,44 +32,15 @@ public class Other {
         return tableView;
     }
 
-    public static void addColumnTest(TableView tableView, String s1, String s2, boolean sortable){
-        Callback<TableColumn, TableCell> cellFactory =
-                new Callback<TableColumn, TableCell>() {
-                    public TableCell call(TableColumn p) {
-                        EditingCell a = new EditingCell();
-                        //a.setMinHeight(32);
-                        a.setAlignment(Pos.CENTER_LEFT);
-                        return a;
-                    }
-                };
-
-        TableColumn column = new TableColumn<>(s1);
-        column.setCellValueFactory(new PropertyValueFactory<>(s2));
-        column.setCellFactory(cellFactory);
-
-        column.setOnEditCommit(
-                new EventHandler<TableColumn.CellEditEvent<TCell, String>>() {
-                    @Override
-                    public void handle(TableColumn.CellEditEvent<TCell, String> t) {
-                        ((TCell) t.getTableView().getItems().get(
-                                t.getTablePosition().getRow())
-                        ).setfName(t.getNewValue());
-                    }
-                }
-        );
-        column.setSortable(sortable);
-        tableView.getColumns().add(column);
-    }
-
     public static void addColumnI(TableView tableView, String s1, String s2, boolean sortable){
-        TableColumn<TCell, Integer> column = new TableColumn<>(s1);
+        TableColumn<Worker, Integer> column = new TableColumn<>(s1);
         column.setCellValueFactory(new PropertyValueFactory<>(s2));
         column.setSortable(sortable);
         tableView.getColumns().add(column);
     }
 
     public static void addColumnS(TableView tableView, String s1, String s2, boolean sortable){
-        TableColumn<TCell, String> column = new TableColumn<>(s1);
+        TableColumn<Worker, String> column = new TableColumn<>(s1);
         column.setCellValueFactory(new PropertyValueFactory<>(s2));
         column.setSortable(sortable);
         tableView.getColumns().add(column);
