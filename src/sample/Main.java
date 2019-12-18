@@ -5,14 +5,50 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
+import java.util.Optional;
+
 import static aFiles.assistsFiles.Global.*;
+import static aFiles.assistsFiles.Save.programSave;
 
 public class Main extends Application {
 
-    public static void programClose(){
-      //  if()
+
+    public static void programClose(Stage stage){
+        int count = 0;
+        if(gMainWindow.isShowing()) count++;
+        if(gBinWindow.isShowing()) count++;
+
+        if(count == 1 && !gIsSave.getText().equals("Сохранено")) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.getDialogPane().setMinWidth(400);
+            alert.setTitle("ЛЯЛЯЛЯ");
+            alert.setHeaderText("Вы хотите сохранит изменения?");
+            alert.setContentText("При выборе \"Не сохранять\" вы можете потерять нужые данные");
+
+            ButtonType buttonTypeSave = new ButtonType("Сохранить");
+            ButtonType buttonTypeDoNotSave = new ButtonType("Не сохранять");
+            ButtonType buttonTypeCancel = new ButtonType("Отмена", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+            alert.getButtonTypes().setAll(buttonTypeSave, buttonTypeDoNotSave, buttonTypeCancel);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == buttonTypeSave){
+                programSave();
+            } else if (result.get() == buttonTypeDoNotSave) {
+                stage.close();
+            } else {
+                return;
+            }
+        } else {
+            stage.close();
+        }
+
     }
 
     @Override
@@ -34,15 +70,6 @@ public class Main extends Application {
         newWindow1.setMinHeight(400);
         newWindow1.setX(gMainWindow.getX() + 200);
         newWindow1.setY(gMainWindow.getY() + 100);
-
-        Parent root3 = FXMLLoader.load(getClass().getResource("/Change/ChangeScene.fxml"));
-        Stage newWindow2 = new Stage();
-        newWindow2.setTitle("Изменить данные");
-        newWindow2.setScene(new Scene(root3));
-        newWindow2.setResizable(false);
-        newWindow2.setX(gMainWindow.getX() + 200);
-        newWindow2.setY(gMainWindow.getY() + 100);
-        //gChangeWindow = newWindow2;
     }
 
 

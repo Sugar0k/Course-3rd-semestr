@@ -2,7 +2,7 @@ package aFiles;
 
 import java.io.Serializable;
 
-public class Worker implements Serializable {
+public class Worker implements Serializable, Comparable<Worker> {
 
     private static final long serialVersionUID = 3193522421923157206L;
 
@@ -101,4 +101,10 @@ public class Worker implements Serializable {
         return false;
     }
 
+    @Override
+    public int compareTo(Worker wr) {
+        if (id < wr.id) return -1;
+        if (id > wr.id) return 1;
+        return 0;
+    }
 }

@@ -10,10 +10,11 @@ import static aFiles.assistsFiles.Global.*;
 public class Filters {
     private Map<Integer, Worker> map;
     private boolean isSalary, isSelectedID,
-        isFName, isLName, isSName;
+        isFName, isLName, isSName, isDepartment;
     private int tSalary, bSalary;
     private int tID, bID;
-    private String fName, lName, sName;
+    private String fName, lName, sName, department;
+
     public Filters(Map map) {
         this.map  = map;
         isSalary = false;
@@ -21,8 +22,27 @@ public class Filters {
         isFName = false;
         isLName = false;
         isSName = false;
+        isDepartment = false;
     }
 
+    public Filters() {
+        isSalary = false;
+        isSelectedID = false;
+        isFName = false;
+        isLName = false;
+        isSName = false;
+        isDepartment = false;
+    }
+
+    public Filters clearFilters(){
+        isSalary = false;
+        isSelectedID = false;
+        isFName = false;
+        isLName = false;
+        isSName = false;
+        isDepartment = false;
+        return this;
+    }
     //fLogic
     public Set<Worker> getSet(){
         Set<Worker> newSet = new TreeSet<Worker>();
@@ -39,6 +59,8 @@ public class Filters {
                 if (!wr.lName.contains(lName)) continue;
             if (isSName)
                 if (!wr.sName.contains(sName)) continue;
+            if (isDepartment)
+                if (!wr.department.contains(department)) continue;
 
             newSet.add(wr);
         }
@@ -46,7 +68,24 @@ public class Filters {
         return newSet;
     }
 
+    public boolean isFiltered(){
+        if (isDepartment ||
+                isSName ||
+                isLName ||
+                isFName ||
+                isSelectedID ||
+                isSalary){
+            return true;
+        }
+        return false;
+    }
+
     //set what?
+    public Filters setMap(Map map){
+        this.map = map;
+        return this;
+    }
+
     public Filters setSalary(int tSalary, int bSalary) {
         this.tSalary = tSalary;
         this.bSalary = bSalary;
@@ -71,6 +110,11 @@ public class Filters {
 
     public Filters setSName(String sName) {
         this.sName = sName;
+        return this;
+    }
+
+    public Filters setDepartment(String department) {
+        this.department = department;
         return this;
     }
 
@@ -100,6 +144,11 @@ public class Filters {
         return this;
     }
 
+    public Filters addDepartment() {
+        isDepartment = true;
+        return this;
+    }
+
     //set bool parameters false
     public Filters deleteSalary(){
         isSalary = false;
@@ -126,6 +175,11 @@ public class Filters {
         return this;
     }
 
+    public Filters deleteDepartment() {
+        isDepartment = false;
+        return this;
+    }
+
     public static void main(String[] args){
         Map<Integer, Worker> map = new TreeMap<Integer, Worker>();
         map.put(1, new Worker(1, "Pavlyuk1", "Alexsandr1", "Petrovich1", 101, "dp 1"));
@@ -138,15 +192,38 @@ public class Filters {
         map.put(8, new Worker(8, "Pavlyuk8", "Alexsandr8", "Petrovich8", 108, "dp 8"));
         map.put(9, new Worker(9, "Pavlyuk9", "Alexsandr9", "Petrovich9", 109, "dp 9"));
         map.put(10, new Worker(10, "Pavlyuk10", "Alexsandr10", "Petrovich10", 110, "dp 10"));
-
+//
         Filters filters = new Filters(map);
-        filters.addSalary().setSalary(103,109).addSelectedID().setID(4, 6).addSName().setSName("a");
+//        filters.addSalary().setSalary(103,109).addSelectedID().setID(4, 6).addSName().setSName("a");
+//        Set<Worker> set = filters.getSet();
+//
+//        for (Worker wr : set){
+//            System.out.println(wr.salary);
+//        }
+
+        int bS = 0, tS = 11111111, bID = 0, tID = 10;
+        String fName = "", sName = "", lName = "", department = "";
+
+        filters.setSalary(bS, tS)
+                .setID(bID, tID)
+                .setFName(fName)
+                .setLName(lName)
+                .setSName(sName)
+                .setDepartment(department);
+
+
+        if (!true) filters.addSalary();
+        if (true) filters.addSelectedID();
+        if (!true) filters.addFName();
+        if (!true) filters.addLName();
+        if (!true) filters.addSName();
+        if (!true) filters.addDepartment();
+
         Set<Worker> set = filters.getSet();
-
-        for (Worker wr : set){
-            System.out.println(wr.salary);
-        }
-
+        System.out.println(set);
+        for (Worker wr : set) System.out.println(wr);
 
     }
+
+
 }

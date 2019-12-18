@@ -66,7 +66,7 @@ public class ControllerChange {
         this.dialogStage = dialogStage;
     }
 
-    public void settCell(Worker worker, boolean b) {
+    public void setWorker(Worker worker, boolean b) {
         chek = b;
         this.worker = worker;
         fName.setText(worker.getFName());

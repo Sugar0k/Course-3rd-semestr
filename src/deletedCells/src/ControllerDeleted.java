@@ -13,10 +13,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import mainWindow.src.Controller;
+import javafx.stage.WindowEvent;
 import sample.Main;
-
-import javax.swing.table.TableColumn;
 
 import static aFiles.assistsFiles.Global.*;
 import static aFiles.assistsFiles.Other.*;
@@ -44,8 +42,12 @@ public class ControllerDeleted {
     void initialize() {
         gTrashTable = initializeTable(tableView, false);
 
-        gBinWindow.setOnCloseRequest(actionEvent -> {
-            Main.programClose();
+        gBinWindow.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                event.consume();
+                Main.programClose(gBinWindow);
+            }
         });
 
         gTrashTable.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -59,7 +61,7 @@ public class ControllerDeleted {
                         Stage dialogStage = createCW(gBinWindow, loader);
                         ControllerChange controller = loader.getController();
                         controller.setDialogStage(dialogStage);
-                        controller.settCell((Worker) gTrashTable.getItems().get(selectedIndex), false);
+                        controller.setWorker((Worker) gTrashTable.getItems().get(selectedIndex), false);
                         dialogStage.showAndWait();
                         gTrashTable.refresh();
                     }

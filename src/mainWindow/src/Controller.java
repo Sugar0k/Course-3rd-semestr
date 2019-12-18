@@ -2,11 +2,14 @@ package mainWindow.src;
 
 import java.io.*;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import Change.src.ControllerChange;
 import aFiles.Company;
 import aFiles.Worker;
+import aFiles.assistsFiles.Filters;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +17,8 @@ import javafx.scene.control.*;
 
 
 import javafx.scene.input.MouseEvent;
-import javafx.stage.FileChooser;
+import javafx.scene.layout.HBox;
+import javafx.stage.WindowEvent;
 import sample.Main;
 import javafx.stage.Stage;
 
@@ -30,6 +34,9 @@ public class Controller {
 
     @FXML
     private URL location;
+
+    @FXML
+    private Label forFilterError;
 
     @FXML
     private MenuItem programOpen;
@@ -68,6 +75,57 @@ public class Controller {
     private Label forError;
 
     @FXML
+    private TextField bottomSalary;
+
+    @FXML
+    private TextField topSalary;
+
+    @FXML
+    private CheckBox salaryCheck;
+
+    @FXML
+    private TextField bottomID;
+
+    @FXML
+    private TextField topID;
+
+    @FXML
+    private CheckBox iDCheck;
+
+    @FXML
+    private TextField filterFName;
+
+    @FXML
+    private CheckBox fNameCheck;
+
+    @FXML
+    private TextField filterLName;
+
+    @FXML
+    private CheckBox lNameCheck;
+
+    @FXML
+    private TextField filterSName;
+
+    @FXML
+    private CheckBox sNameCheck;
+
+    @FXML
+    private TextField filterDepartment;
+
+    @FXML
+    private CheckBox departmentCheck;
+
+    @FXML
+    private Button useFilters;
+
+    @FXML
+    private Button useDefault;
+
+    @FXML
+    private Button clearFields;
+
+    @FXML
     private TableView<Worker> tableView;
 
     @FXML
@@ -82,16 +140,96 @@ public class Controller {
     @FXML
     private Button deleteWorker;
 
+
     @FXML
     void initialize() {
 
         gMainTable = initializeTable(tableView, true);
         gIsSave = isSave;
         gFileLocation = fileLocation;
-        programClose.setOnAction(actionEvent -> Main.programClose());
 
-        gMainWindow.setOnCloseRequest(actionEvent -> {
-            Main.programClose();
+        useFilters.setOnAction(actionEvent -> {
+            Filters filter = gFilter;
+            filter.setMap(gCompany.getMap());
+                    //new Filters(gCompany.getMap());
+
+            int bS = 0, tS = 0, bID = 0, tID = 0;
+            String fName = "", sName = "", lName = "", department = "";
+            try {
+                bS = Integer.parseInt(bottomSalary.getText());
+                tS = Integer.parseInt(topSalary.getText());
+            } catch (Exception e) {}
+            try {
+                bID = Integer.parseInt(bottomID.getText());
+                tID = Integer.parseInt(topID.getText());
+            } catch (Exception e) {}
+
+            fName = filterFName.getText();
+            lName = filterLName.getText();
+            sName = filterSName.getText();
+            department = filterDepartment.getText();
+
+            filter.setSalary(bS, tS)
+                    .setID(bID, tID)
+                    .setFName(fName)
+                    .setLName(lName)
+                    .setSName(sName)
+                    .setDepartment(department);
+
+            if (salaryCheck.isSelected()) filter.addSalary();
+            if (iDCheck.isSelected()) filter.addSelectedID();
+            if (fNameCheck.isSelected()) filter.addFName();
+            if (lNameCheck.isSelected()) filter.addLName();
+            if (sNameCheck.isSelected()) filter.addSName();
+            if (departmentCheck.isSelected()) filter.addDepartment();
+            if (filter.isFiltered()) {
+                Set<Worker> set = filter.getSet();
+                filter.clearFilters();
+                //           System.out.println(set);
+                tableView.getItems().clear();
+                tableView.getItems().setAll(set);
+                tableView.refresh();
+                for (Worker wr : set) System.out.println(wr);
+            } else {
+                tableView.getItems().clear();
+                tableView.getItems().setAll(gCompany.getMap().values());
+                tableView.refresh();
+            }
+        });
+
+        useDefault.setOnAction(actionEvent -> {
+            tableView.getItems().clear();
+            tableView.getItems().setAll(gCompany.getMap().values());
+            tableView.refresh();
+        });
+
+        clearFields.setOnAction(actionEvent -> {
+            bottomSalary.clear();
+            topSalary.clear();
+            bottomID.clear();
+            topID.clear();
+            filterFName.clear();
+            filterLName.clear();
+            filterSName.clear();
+            filterDepartment.clear();
+            salaryCheck.setSelected(false);
+            iDCheck.setSelected(false);
+            fNameCheck.setSelected(false);
+            lNameCheck.setSelected(false);
+            sNameCheck.setSelected(false);
+            departmentCheck.setSelected(false);
+        });
+
+        programClose.setOnAction(actionEvent -> {
+            Main.programClose(gMainWindow);
+        });
+
+        gMainWindow.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                event.consume();
+                Main.programClose(gMainWindow);
+            }
         });
 
         gMainTable.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -106,7 +244,7 @@ public class Controller {
                         //gChangeWindow = newWindow2;
                         ControllerChange controller = loader.getController();
                         controller.setDialogStage(dialogStage);
-                        controller.settCell((Worker) gMainTable.getItems().get(selectedIndex), true);
+                        controller.setWorker((Worker) gMainTable.getItems().get(selectedIndex), true);
                         dialogStage.showAndWait();
                         gMainTable.refresh();
                     }
@@ -121,11 +259,6 @@ public class Controller {
                 gBinWindow.requestFocus();
             } else gBinWindow.show();
         });
-
-
-
-
-
 
         addWorker.setOnAction(actionEvent -> {
             try {

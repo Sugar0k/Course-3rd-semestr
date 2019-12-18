@@ -13,6 +13,7 @@ import java.util.List;
 public class Global {
     public static Company gCompany = new Company();
     public static List<Worker> gTrashList = new LinkedList();
+    public static Filters gFilter = new Filters(gCompany.getMap());
 
     public static TableView gMainTable;
     public static TableView gTrashTable;

@@ -125,17 +125,17 @@
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" stylesheets="@src/stylesHeets.css" VBox.vgrow="ALWAYS">
                      <children>
-                        <TextField promptText="Нижняя граница зарплаты" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="bottomSalary" promptText="Нижняя граница зарплаты" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets right="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <TextField cache="true" promptText="Верхняя граница зарплаты" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="topSalary" cache="true" promptText="Верхняя граница зарплаты" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets left="5.0" right="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <CheckBox mnemonicParsing="false" text="Использовать фильтр" textOverrun="LEADING_WORD_ELLIPSIS">
+                        <CheckBox fx:id="salaryCheck" mnemonicParsing="false" text="Использовать" textOverrun="LEADING_WORD_ELLIPSIS">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>
@@ -147,17 +147,17 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <TextField promptText="Нижняя граница ID" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="bottomID" promptText="Нижняя граница ID" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets right="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <TextField cache="true" promptText="Верхняя граница ID" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="topID" cache="true" promptText="Верхняя граница ID" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets left="5.0" right="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <CheckBox mnemonicParsing="false" text="Использовать фильтр" textOverrun="LEADING_WORD_ELLIPSIS">
+                        <CheckBox fx:id="iDCheck" mnemonicParsing="false" text="Использовать" textOverrun="LEADING_WORD_ELLIPSIS">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>
@@ -169,22 +169,22 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <TextField promptText="Фильтр имени" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="filterFName" promptText="Фильтр имени" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets right="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <CheckBox mnemonicParsing="false" text="Использовать" HBox.hgrow="ALWAYS">
+                        <CheckBox fx:id="fNameCheck" mnemonicParsing="false" text="Использовать" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets left="5.0" right="5.0" />
                            </HBox.margin>
                         </CheckBox>
-                        <TextField promptText="Фильтр фамилии" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="filterLName" promptText="Фильтр фамилии" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets left="5.0" right="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <CheckBox mnemonicParsing="false" text="Использовать" HBox.hgrow="ALWAYS">
+                        <CheckBox fx:id="lNameCheck" mnemonicParsing="false" text="Использовать" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>
@@ -196,27 +196,54 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <TextField promptText="Фильтр отчества" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="filterSName" promptText="Фильтр отчества" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets right="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <CheckBox mnemonicParsing="false" text="Использовать" HBox.hgrow="ALWAYS">
+                        <CheckBox fx:id="sNameCheck" mnemonicParsing="false" text="Использовать" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets left="5.0" right="5.0" />
                            </HBox.margin>
                         </CheckBox>
-                        <TextField promptText="Фильтр отдела" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="filterDepartment" promptText="Фильтр отдела" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets left="5.0" right="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <CheckBox mnemonicParsing="false" text="Использовать" HBox.hgrow="ALWAYS">
+                        <CheckBox fx:id="departmentCheck" mnemonicParsing="false" text="Использовать" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>
                         </CheckBox>
                      </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="useFilters" mnemonicParsing="false" prefWidth="150.0" text="Применить фильтр">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="useDefault" mnemonicParsing="false" prefWidth="150.0" text="Сбросить фильтры">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="clearFields" mnemonicParsing="false" prefWidth="100.0" text="Очистить поля">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Label fx:id="forFilterError" prefWidth="250.0" textFill="WHITE">
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
                   </HBox>
                </children>
             </VBox>
