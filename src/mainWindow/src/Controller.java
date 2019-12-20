@@ -36,9 +36,6 @@ public class Controller {
     private URL location;
 
     @FXML
-    private Label forFilterError;
-
-    @FXML
     private MenuItem programOpen;
 
     @FXML
@@ -276,7 +273,7 @@ public class Controller {
                     forError.setText("ID должен быть уникальным");
                 }
             } catch (Exception e) {
-                forError.setText("Не корректные данные");
+                forError.setText("Некорректные данные");
             }
         });
 
