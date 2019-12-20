@@ -17,6 +17,7 @@ public class Global {
 
     public static TableView gMainTable;
     public static TableView gTrashTable;
+    public static TableView gSecondTable;
 
     public static Stage gMainWindow;
     public static Stage gBinWindow;

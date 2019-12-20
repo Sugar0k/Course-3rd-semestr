@@ -8,6 +8,7 @@ import java.util.Set;
 
 import Change.src.ControllerChange;
 import aFiles.Company;
+import aFiles.Department;
 import aFiles.Worker;
 import aFiles.assistsFiles.Filters;
 import javafx.event.EventHandler;
@@ -126,6 +127,9 @@ public class Controller {
     private TableView<Worker> tableView;
 
     @FXML
+    private TableView<Department> secondTable;
+
+    @FXML
     private Label isSave;
 
     @FXML
@@ -142,6 +146,7 @@ public class Controller {
     void initialize() {
 
         gMainTable = initializeTable(tableView, true);
+        gSecondTable = initializeSecondTable(secondTable);
         gIsSave = isSave;
         gFileLocation = fileLocation;
 
@@ -267,6 +272,12 @@ public class Controller {
                         addDepartment.getText());
                 if (gCompany.add(temp)){
                     isSave.setText("Не сохранено");
+                    if (gCompany.getDep(temp.department).getQuantity() == 1) {
+                        gSecondTable.getItems().add(gCompany.getDep(temp.department));
+                    }
+                    else {
+                        gSecondTable.refresh();
+                    }
                     gMainTable.getItems().add(temp);
                     forError.setText("");
                 } else {
@@ -284,8 +295,14 @@ public class Controller {
                 Worker temp = (Worker) gMainTable.getItems().get(selectedIndex);
                 gTrashList.add(temp);
                 gTrashTable.getItems().add(temp);
-                gCompany.del(temp.id);
+                Department dep = gCompany.getDep(temp.department);
+                gCompany.del(temp);
                 gMainTable.getItems().remove(selectedIndex);
+                if (dep.isEmpty()){
+                    gSecondTable.getItems().remove(dep);
+                } else {
+                    gSecondTable.refresh();
+                }
 
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -306,8 +323,10 @@ public class Controller {
                     ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(sFile.getAbsolutePath()));
                     gCompany = (Company) inputStream.readObject();
                     gMainTable.getItems().clear();
-                    for (Worker wr : gCompany.getMap().values())
+                    for (Worker wr : gCompany.getMap().values()) {
+                        gSecondTable.getItems().add(gCompany.getDep(wr.department));
                         gMainTable.getItems().add(wr);
+                    }
                     isSave.setText("Сохранено");
                 } catch (StreamCorruptedException e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);

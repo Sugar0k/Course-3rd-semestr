@@ -90,7 +90,7 @@ public class ControllerChange {
         worker.setDepartment(department.getText());
 
         if (chek && !(worker.id == Integer.parseInt(ID.getText()))) {
-            gCompany.del(worker.id);
+            gCompany.del(worker);
             worker.setId(Integer.parseInt(ID.getText()));
             gCompany.add(worker);
         } else {

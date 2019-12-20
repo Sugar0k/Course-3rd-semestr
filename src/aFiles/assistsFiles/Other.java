@@ -22,6 +22,16 @@ import static aFiles.assistsFiles.Global.gBinWindow;
 
 public class Other {
 
+    public static TableView initializeSecondTable(TableView tableView){
+        boolean sortable = true;
+        addColumnS(tableView, "Название отдела", "title", sortable);
+        addColumnI(tableView, "Кол-во сотрудников", "quantity", sortable);
+        addColumnI(tableView, "Средняя зарплата", "middleSalary", sortable);
+        addColumnI(tableView, "Мин зарплата", "minSalary", sortable);
+        addColumnI(tableView, "Макс зарплата", "maxSalary", sortable);
+        return tableView;
+    }
+
     public static TableView initializeTable(TableView tableView, boolean sortable){
         addColumnI(tableView, "ID", "id", sortable);
         addColumnS(tableView, "Фамилия", "lName", sortable);
