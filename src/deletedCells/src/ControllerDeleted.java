@@ -89,6 +89,7 @@ public class ControllerDeleted {
                     else {
                         gSecondTable.refresh();
                     }
+                    gStatistic.setText(Integer.toString(middleSalary()));
                     gTrashList.remove(temp);
                     gTrashTable.getItems().remove(selectedIndex);
                 } else {
@@ -102,9 +103,9 @@ public class ControllerDeleted {
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.initOwner(gBinWindow);
-                alert.setTitle("No Selection");
-                alert.setHeaderText("Ничего не выбрано");
-                alert.setContentText("Пожалуйста выберите нужного рабочего в таблице.");
+                alert.setTitle("Ничего не выбрано");
+                alert.setHeaderText("В таблице ничего не выбрано");
+                alert.setContentText("Пожалуйста выберите нужного рабочего в таблице");
                 alert.showAndWait();
             }
         });
@@ -119,9 +120,9 @@ public class ControllerDeleted {
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.initOwner(gBinWindow);
-                alert.setTitle("No Selection");
-                alert.setHeaderText("Ничего не выбрано");
-                alert.setContentText("Пожалуйста выберите нужного рабочего в таблице.");
+                alert.setTitle("Ничего не выбрано");
+                alert.setHeaderText("В таблице ничего не выбрано");
+                alert.setContentText("Пожалуйста выберите нужного рабочего в таблице");
                 alert.showAndWait();
             }
         });

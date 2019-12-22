@@ -26,5 +26,6 @@ public class Global {
 
     public static Label gIsSave;
     public static Label gFileLocation;
+    public static Label gStatistic;
 
 }

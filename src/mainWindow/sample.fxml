@@ -69,7 +69,7 @@
                               <Insets left="10.0" />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="fileLocation" prefHeight="18.0" prefWidth="395.0" text="Путь файла">
+                        <Label fx:id="fileLocation" prefHeight="18.0" prefWidth="371.0" text="Путь файла">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
@@ -79,12 +79,23 @@
                         </Label>
                      </children>
                   </HBox>
+                  <Label text="Средняя зарплата:">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="statistic" text="0" />
                   <Button fx:id="riseUp" mnemonicParsing="false" text="Корзина">
                      <HBox.margin>
                         <Insets left="10.0" right="10.0" />
                      </HBox.margin>
                   </Button>
                   <Button fx:id="deleteWorker" mnemonicParsing="false" text="Удалить">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="deleteAll" mnemonicParsing="false" text="Удалть всё">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
@@ -289,11 +300,6 @@
                                     </HBox>
                                  </children>
                               </VBox>
-                           </content>
-                        </TitledPane>
-                        <TitledPane expanded="false" text="Удаление">
-                           <content>
-                              <VBox />
                            </content>
                         </TitledPane>
                         <TableView fx:id="secondTable" editable="true" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">

@@ -17,8 +17,10 @@ import javafx.util.Callback;
 import mainWindow.src.Controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import static aFiles.assistsFiles.Global.gBinWindow;
+import static aFiles.assistsFiles.Global.gMainTable;
 
 public class Other {
 
@@ -80,5 +82,15 @@ public class Other {
         dialogStage.setX(stage.getX() + 200);
         dialogStage.setY(stage.getY() + 100);
         return dialogStage;
+    }
+
+    public static int middleSalary() {
+        List<Worker> list = gMainTable.getItems();
+        int salary = 0;
+        for (Worker wr: list) {
+            salary+= wr.salary;
+        }
+        if (list.size() == 0) return 0;
+        return salary / list.size();
     }
 }

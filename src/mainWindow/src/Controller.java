@@ -141,6 +141,12 @@ public class Controller {
     @FXML
     private Button deleteWorker;
 
+    @FXML
+    private Button deleteAll;
+
+    @FXML
+    private Label statistic;
+
 
     @FXML
     void initialize() {
@@ -149,6 +155,7 @@ public class Controller {
         gSecondTable = initializeSecondTable(secondTable);
         gIsSave = isSave;
         gFileLocation = fileLocation;
+        gStatistic = statistic;
 
         useFilters.setOnAction(actionEvent -> {
             Filters filter = gFilter;
@@ -197,12 +204,14 @@ public class Controller {
                 tableView.getItems().setAll(gCompany.getMap().values());
                 tableView.refresh();
             }
+            statistic.setText(Integer.toString(middleSalary()));
         });
 
         useDefault.setOnAction(actionEvent -> {
             tableView.getItems().clear();
             tableView.getItems().setAll(gCompany.getMap().values());
             tableView.refresh();
+            statistic.setText(Integer.toString(middleSalary()));
         });
 
         clearFields.setOnAction(actionEvent -> {
@@ -248,10 +257,12 @@ public class Controller {
                         controller.setDialogStage(dialogStage);
                         controller.setWorker((Worker) gMainTable.getItems().get(selectedIndex), true);
                         dialogStage.showAndWait();
+                        statistic.setText(Integer.toString(middleSalary()));
                         gMainTable.refresh();
                     }
                 }
             }
+
         });
 
 
@@ -280,6 +291,8 @@ public class Controller {
                     }
                     gMainTable.getItems().add(temp);
                     forError.setText("");
+                    statistic.setText(Integer.toString(middleSalary()));
+
                 } else {
                     forError.setText("ID должен быть уникальным");
                 }
@@ -303,6 +316,7 @@ public class Controller {
                 } else {
                     gSecondTable.refresh();
                 }
+                statistic.setText(Integer.toString(middleSalary()));
 
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -312,6 +326,21 @@ public class Controller {
                 alert.setContentText("Пожалуйста выберите нужного рабочего в таблице.");
                 alert.showAndWait();
             }
+        });
+
+        deleteAll.setOnAction(actionEvent -> {
+            List<Worker> list = gMainTable.getItems();
+            if (list.isEmpty()) return;
+            for (Worker wr: list) {
+                Department dep = gCompany.getDep(wr.department);
+                gTrashList.add(wr);
+                gTrashTable.getItems().add(wr);
+                gCompany.del(wr);
+                if (dep.isEmpty()) gSecondTable.getItems().remove(dep);
+            }
+            gMainTable.getItems().clear();
+            gSecondTable.refresh();
+            statistic.setText(Integer.toString(middleSalary()));
         });
 
         programOpen.setOnAction(actionEvent -> {
@@ -328,6 +357,8 @@ public class Controller {
                         gMainTable.getItems().add(wr);
                     }
                     isSave.setText("Сохранено");
+                    statistic.setText(Integer.toString(middleSalary()));
+
                 } catch (StreamCorruptedException e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.initOwner(gMainWindow);
