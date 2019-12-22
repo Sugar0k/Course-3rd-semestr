@@ -3,6 +3,7 @@ package Change.src;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import aFiles.Department;
 import aFiles.Worker;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -83,21 +84,31 @@ public class ControllerChange {
 
     @FXML
     private void handleOk() {
+        if (chek) {
+            Department dep = gCompany.getDep(worker.department);
+            gCompany.del(worker);
+            if (dep.isEmpty()) gSecondTable.getItems().remove(dep);
+        }
+
         worker.setfName(fName.getText());
         worker.setlName(lName.getText());
         worker.setsName(sName.getText());
-        worker.setSalary(Integer.parseInt(salary.getText()));
         worker.setDepartment(department.getText());
 
-        if (chek && !(worker.id == Integer.parseInt(ID.getText()))) {
-            gCompany.del(worker);
-            worker.setId(Integer.parseInt(ID.getText()));
+        worker.setId(Integer.parseInt(ID.getText()));
+        worker.setSalary(Integer.parseInt(salary.getText()));
+
+        if (chek) {
             gCompany.add(worker);
-        } else {
-            worker.setId(Integer.parseInt(ID.getText()));
+            if (gCompany.getDep(worker.department).getQuantity() == 1) {
+                gSecondTable.getItems().add(gCompany.getDep(worker.department));
+            }
         }
 
 
+
+
+        gSecondTable.refresh();
         okClicked = true;
         dialogStage.close();
     }

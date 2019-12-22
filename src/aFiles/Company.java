@@ -25,7 +25,6 @@ public class Company implements Serializable{
         if (!map.containsKey(wrk.id)) {
             if (containsDep(wrk.department)) {
                 Department dep = getDep(wrk.department);
-                System.out.println("deps " + dep.getQuantity());
                 dep.updateUp(wrk.salary);
             } else set.add(new Department(wrk.department, wrk.salary));
             map.put(wrk.id, wrk);

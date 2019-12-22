@@ -24,6 +24,7 @@ public class Department implements Serializable, Comparable<Department>{
         this.minSalary = salary;
         this.maxSalary = salary;
         vector = new Vector();
+        vector.add(salary);
     }
 
     public String getTitle() {
@@ -78,14 +79,14 @@ public class Department implements Serializable, Comparable<Department>{
             minSalary = vector.get(0);
             maxSalary = vector.get(0);
         }
-        for (int temp: vector) {
-            updateMinMax(temp);
-        }
         commonSalary -= salary;
         quantity--;
         if (quantity == 0) {
             middleSalary = 0;
             return;
+        }
+        for (int temp: vector) {
+            updateMinMax(temp);
         }
         middleSalary = commonSalary / quantity;
     }
