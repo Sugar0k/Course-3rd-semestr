@@ -18,7 +18,6 @@ import javafx.scene.control.*;
 
 
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.stage.WindowEvent;
 import sample.Main;
 import javafx.stage.Stage;
@@ -47,6 +46,9 @@ public class Controller {
 
     @FXML
     private MenuItem programClose;
+
+    @FXML
+    private MenuItem about;
 
     @FXML
     private TextField addLName;
@@ -160,7 +162,6 @@ public class Controller {
         useFilters.setOnAction(actionEvent -> {
             Filters filter = gFilter;
             filter.setMap(gCompany.getMap());
-                    //new Filters(gCompany.getMap());
 
             int bS = 0, tS = 0, bID = 0, tID = 0;
             String fName = "", sName = "", lName = "", department = "";
@@ -194,7 +195,6 @@ public class Controller {
             if (filter.isFiltered()) {
                 Set<Worker> set = filter.getSet();
                 filter.clearFilters();
-                //           System.out.println(set);
                 tableView.getItems().clear();
                 tableView.getItems().setAll(set);
                 tableView.refresh();
@@ -252,7 +252,6 @@ public class Controller {
                     if (cell != null){
                         FXMLLoader loader = new FXMLLoader();
                         Stage dialogStage = createCW(gMainWindow, loader);
-                        //gChangeWindow = newWindow2;
                         ControllerChange controller = loader.getController();
                         controller.setDialogStage(dialogStage);
                         controller.setWorker((Worker) gMainTable.getItems().get(selectedIndex), true);
@@ -263,6 +262,20 @@ public class Controller {
                 }
             }
 
+        });
+
+        about.setOnAction(actionEvent -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("О программе");
+            alert.setHeaderText(null);
+            alert.setContentText("Программу написал студент 2-го курса\n" +
+                    "Севастопольского государственного университета\n" +
+                    "Направление: Информатика и вычислительная техника\n" +
+                    "Павлюк Александр Петрович\n" +
+                    "Использован язык Java и JavaFX фреймворк\n" +
+                    "Севастополь 2019");
+
+            alert.showAndWait();
         });
 
 
@@ -321,9 +334,9 @@ public class Controller {
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.initOwner(gMainWindow);
-                alert.setTitle("No Selection");
-                alert.setHeaderText("Ничего не выбрано");
-                alert.setContentText("Пожалуйста выберите нужного рабочего в таблице.");
+                alert.setTitle("Ничего не выбрано");
+                alert.setHeaderText("В таблице ничего не выбрано");
+                alert.setContentText("Пожалуйста выберите нужного рабочего в таблице");
                 alert.showAndWait();
             }
         });
@@ -340,6 +353,7 @@ public class Controller {
             }
             gMainTable.getItems().clear();
             gSecondTable.refresh();
+            isSave.setText("Не сохранено");
             statistic.setText(Integer.toString(middleSalary()));
         });
 

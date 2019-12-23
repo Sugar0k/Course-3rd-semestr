@@ -48,7 +48,7 @@ public class ControllerChange {
     private Stage dialogStage;
     private Worker worker;
     private boolean okClicked = false;
-    private boolean chek = false;
+    private boolean check = false;
 
     @FXML
     private void initialize() {
@@ -68,7 +68,7 @@ public class ControllerChange {
     }
 
     public void setWorker(Worker worker, boolean b) {
-        chek = b;
+        check = b;
         this.worker = worker;
         fName.setText(worker.getFName());
         lName.setText(worker.getLName());
@@ -84,7 +84,7 @@ public class ControllerChange {
 
     @FXML
     private void handleOk() {
-        if (chek) {
+        if (check) {
             Department dep = gCompany.getDep(worker.department);
             gCompany.del(worker);
             if (dep.isEmpty()) gSecondTable.getItems().remove(dep);
@@ -98,16 +98,12 @@ public class ControllerChange {
         worker.setId(Integer.parseInt(ID.getText()));
         worker.setSalary(Integer.parseInt(salary.getText()));
 
-        if (chek) {
+        if (check) {
             gCompany.add(worker);
             if (gCompany.getDep(worker.department).getQuantity() == 1) {
                 gSecondTable.getItems().add(gCompany.getDep(worker.department));
             }
         }
-
-
-
-
         gSecondTable.refresh();
         okClicked = true;
         dialogStage.close();
@@ -146,7 +142,7 @@ public class ControllerChange {
 
         try {
             if (!(worker.id == Integer.parseInt(ID.getText())))
-                if (chek && gCompany.contains(Integer.parseInt(ID.getText()))) {
+                if (check && gCompany.contains(Integer.parseInt(ID.getText()))) {
                     errorMessage = "Требуеться уникальный ID!";
                 }
         } catch (Exception e) {
@@ -159,9 +155,9 @@ public class ControllerChange {
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.initOwner(dialogStage);
-            alert.setTitle("Invalid Fields");
-            alert.setHeaderText("Please correct invalid fields");
-            alert.setContentText(errorMessage);
+            alert.setTitle("Не корректные данные!");
+            alert.setHeaderText("Введены не верные данные");
+            alert.setContentText("Пожалуйста перезапролните поля");
 
             alert.showAndWait();
 

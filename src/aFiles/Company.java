@@ -3,8 +3,6 @@ package aFiles;
 import java.io.Serializable;
 import java.util.*;
 
-import static aFiles.assistsFiles.Global.gSecondTable;
-
 public class Company implements Serializable{
 
     private static final long serialVersionUID = 4020926496140356425L;

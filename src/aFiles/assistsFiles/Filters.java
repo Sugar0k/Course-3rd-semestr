@@ -1,11 +1,8 @@
 package aFiles.assistsFiles;
 
-import aFiles.Company;
 import aFiles.Worker;
 
 import java.util.*;
-
-import static aFiles.assistsFiles.Global.*;
 
 public class Filters {
     private Map<Integer, Worker> map;
@@ -179,51 +176,4 @@ public class Filters {
         isDepartment = false;
         return this;
     }
-
-    public static void main(String[] args){
-        Map<Integer, Worker> map = new TreeMap<Integer, Worker>();
-        map.put(1, new Worker(1, "Pavlyuk1", "Alexsandr1", "Petrovich1", 101, "dp 1"));
-        map.put(2, new Worker(2, "Pavlyuk2", "Alexsandr2", "Petrovich2", 102, "dp 2"));
-        map.put(3, new Worker(3, "Pavlyuk3", "Alexsandr3", "Petrovich3", 103, "dp 3"));
-        map.put(4, new Worker(4, "Pavlyuk4", "Alexsandr4", "Petrovich4", 104, "dp 4"));
-        map.put(5, new Worker(5, "Pavlyuk5", "Alexsandr5", "Petrovicha5", 105, "dp 5"));
-        map.put(6, new Worker(6, "Pavlyuk6", "Alexsandr6", "Petrovich6", 106, "dp 6"));
-        map.put(7, new Worker(7, "Pavlyuk7", "Alexsandr7", "Petrovich7", 107, "dp 7"));
-        map.put(8, new Worker(8, "Pavlyuk8", "Alexsandr8", "Petrovich8", 108, "dp 8"));
-        map.put(9, new Worker(9, "Pavlyuk9", "Alexsandr9", "Petrovich9", 109, "dp 9"));
-        map.put(10, new Worker(10, "Pavlyuk10", "Alexsandr10", "Petrovich10", 110, "dp 10"));
-//
-        Filters filters = new Filters(map);
-//        filters.addSalary().setSalary(103,109).addSelectedID().setID(4, 6).addSName().setSName("a");
-//        Set<Worker> set = filters.getSet();
-//
-//        for (Worker wr : set){
-//            System.out.println(wr.salary);
-//        }
-
-        int bS = 0, tS = 11111111, bID = 0, tID = 10;
-        String fName = "", sName = "", lName = "", department = "";
-
-        filters.setSalary(bS, tS)
-                .setID(bID, tID)
-                .setFName(fName)
-                .setLName(lName)
-                .setSName(sName)
-                .setDepartment(department);
-
-
-        if (!true) filters.addSalary();
-        if (true) filters.addSelectedID();
-        if (!true) filters.addFName();
-        if (!true) filters.addLName();
-        if (!true) filters.addSName();
-        if (!true) filters.addDepartment();
-
-        Set<Worker> set = filters.getSet();
-        System.out.println(set);
-        for (Worker wr : set) System.out.println(wr);
-
-    }
-
-
 }

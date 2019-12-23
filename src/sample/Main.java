@@ -1,14 +1,12 @@
 package sample;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
-import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 import java.util.Optional;
@@ -27,7 +25,7 @@ public class Main extends Application {
         if(count == 1 && !gIsSave.getText().equals("Сохранено")) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.getDialogPane().setMinWidth(400);
-            alert.setTitle("ЛЯЛЯЛЯ");
+            alert.setTitle("Закрытие приложения");
             alert.setHeaderText("Вы хотите сохранит изменения?");
             alert.setContentText("При выборе \"Не сохранять\" вы можете потерять нужые данные");
 
@@ -55,7 +53,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         gMainWindow = primaryStage;
         Parent root1 = FXMLLoader.load(getClass().getResource("/mainWindow/sample.fxml"));
-        primaryStage.setTitle("MINE LIBER PROGRAM");
+        primaryStage.setTitle("Курсовая работа Павлюк ИВТ/б-18-2-о");
         primaryStage.setScene(new Scene(root1));
         primaryStage.setMinWidth(700);
         primaryStage.setMinHeight(400);
@@ -71,8 +69,6 @@ public class Main extends Application {
         newWindow1.setX(gMainWindow.getX() + 200);
         newWindow1.setY(gMainWindow.getY() + 100);
     }
-
-
 
     public static void main(String[] args) {
         launch(args);

@@ -1,25 +1,20 @@
 package aFiles.assistsFiles;
 
 import aFiles.Worker;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import mainWindow.src.Controller;
 
 import java.io.IOException;
 import java.util.List;
 
-import static aFiles.assistsFiles.Global.gBinWindow;
 import static aFiles.assistsFiles.Global.gMainTable;
 
 public class Other {

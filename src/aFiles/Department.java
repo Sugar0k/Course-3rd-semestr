@@ -103,8 +103,13 @@ public class Department implements Serializable, Comparable<Department>{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || String.class != o.getClass()) return false;
-        String that = (String) o;
+        if (o == null) return false;
+        String that;
+        if (String.class == o.getClass()) {
+            that = (String) o;
+        } else if (getClass() == o.getClass()) {
+            that = ((Department)o).title;
+        } else return false;
         return title.equals(that);
     }
 
