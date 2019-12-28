@@ -47,7 +47,6 @@ public class ControllerChange {
 
     private Stage dialogStage;
     private Worker worker;
-    private boolean okClicked = false;
     private boolean check = false;
 
     @FXML
@@ -78,21 +77,17 @@ public class ControllerChange {
         department.setText(worker.getDepartment());
     }
 
-    public boolean isOkClicked() {
-        return okClicked;
-    }
 
-    @FXML
     private void handleOk() {
         if (check) {
-            Department dep = gCompany.getDep(worker.department);
+            Department dep = gCompany.getDep(worker.getDepartment());
             gCompany.del(worker);
             if (dep.isEmpty()) gSecondTable.getItems().remove(dep);
         }
 
-        worker.setfName(fName.getText());
-        worker.setlName(lName.getText());
-        worker.setsName(sName.getText());
+        worker.setFName(fName.getText());
+        worker.setLName(lName.getText());
+        worker.setSName(sName.getText());
         worker.setDepartment(department.getText());
 
         worker.setId(Integer.parseInt(ID.getText()));
@@ -100,18 +95,15 @@ public class ControllerChange {
 
         if (check) {
             gCompany.add(worker);
-            if (gCompany.getDep(worker.department).getQuantity() == 1) {
-                gSecondTable.getItems().add(gCompany.getDep(worker.department));
+            if (gCompany.getDep(worker.getDepartment()).getQuantity() == 1) {
+                gSecondTable.getItems().add(gCompany.getDep(worker.getDepartment()));
             }
         }
         gSecondTable.refresh();
-        okClicked = true;
         dialogStage.close();
     }
 
 
-
-    @FXML
     private void handleCancel() {
         dialogStage.close();
     }
@@ -141,7 +133,7 @@ public class ControllerChange {
 
 
         try {
-            if (!(worker.id == Integer.parseInt(ID.getText())))
+            if (!(worker.getId() == Integer.parseInt(ID.getText())))
                 if (check && gCompany.contains(Integer.parseInt(ID.getText()))) {
                     errorMessage = "Требуеться уникальный ID!";
                 }
@@ -155,8 +147,8 @@ public class ControllerChange {
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.initOwner(dialogStage);
-            alert.setTitle("Не корректные данные!");
-            alert.setHeaderText("Введены не верные данные");
+            alert.setTitle("Введены не верные данные");
+            alert.setHeaderText(errorMessage);
             alert.setContentText("Пожалуйста перезапролните поля");
 
             alert.showAndWait();

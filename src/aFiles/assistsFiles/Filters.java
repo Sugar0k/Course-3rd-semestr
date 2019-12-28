@@ -47,17 +47,17 @@ public class Filters {
         for (Map.Entry <Integer, Worker> keyVal: setM) {
             Worker wr = keyVal.getValue();
             if (isSalary)
-                if(!(wr.salary <= bSalary && wr.salary >= tSalary)) continue;
+                if(!(wr.getSalary() <= bSalary && wr.getSalary() >= tSalary)) continue;
             if (isSelectedID)
-                if (!(wr.id <= bID && wr.id >= tID)) continue;
+                if (!(wr.getId() <= bID && wr.getId() >= tID)) continue;
             if (isFName)
-                if (!wr.fName.contains(fName)) continue;
+                if (!wr.getFName().contains(fName)) continue;
             if (isLName)
-                if (!wr.lName.contains(lName)) continue;
+                if (!wr.getLName().contains(lName)) continue;
             if (isSName)
-                if (!wr.sName.contains(sName)) continue;
+                if (!wr.getSName().contains(sName)) continue;
             if (isDepartment)
-                if (!wr.department.contains(department)) continue;
+                if (!wr.getDepartment().contains(department)) continue;
 
             newSet.add(wr);
         }

@@ -17,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 
 
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.WindowEvent;
 import sample.Main;
@@ -49,6 +50,24 @@ public class Controller {
 
     @FXML
     private MenuItem about;
+
+    @FXML
+    private Label isSave;
+
+    @FXML
+    private Label fileLocation;
+
+    @FXML
+    private Label statistic;
+
+    @FXML
+    private Button riseUp;
+
+    @FXML
+    private Button deleteWorker;
+
+    @FXML
+    private Button deleteAll;
 
     @FXML
     private TextField addLName;
@@ -131,24 +150,6 @@ public class Controller {
     @FXML
     private TableView<Department> secondTable;
 
-    @FXML
-    private Label isSave;
-
-    @FXML
-    private Label fileLocation;
-
-    @FXML
-    private Button riseUp;
-
-    @FXML
-    private Button deleteWorker;
-
-    @FXML
-    private Button deleteAll;
-
-    @FXML
-    private Label statistic;
-
 
     @FXML
     void initialize() {
@@ -198,7 +199,6 @@ public class Controller {
                 tableView.getItems().clear();
                 tableView.getItems().setAll(set);
                 tableView.refresh();
-                for (Worker wr : set) System.out.println(wr);
             } else {
                 tableView.getItems().clear();
                 tableView.getItems().setAll(gCompany.getMap().values());
@@ -296,8 +296,8 @@ public class Controller {
                         addDepartment.getText());
                 if (gCompany.add(temp)){
                     isSave.setText("Не сохранено");
-                    if (gCompany.getDep(temp.department).getQuantity() == 1) {
-                        gSecondTable.getItems().add(gCompany.getDep(temp.department));
+                    if (gCompany.getDep(temp.getDepartment()).getQuantity() == 1) {
+                        gSecondTable.getItems().add(gCompany.getDep(temp.getDepartment()));
                     }
                     else {
                         gSecondTable.refresh();
@@ -321,7 +321,7 @@ public class Controller {
                 Worker temp = (Worker) gMainTable.getItems().get(selectedIndex);
                 gTrashList.add(temp);
                 gTrashTable.getItems().add(temp);
-                Department dep = gCompany.getDep(temp.department);
+                Department dep = gCompany.getDep(temp.getDepartment());
                 gCompany.del(temp);
                 gMainTable.getItems().remove(selectedIndex);
                 if (dep.isEmpty()){
@@ -345,7 +345,7 @@ public class Controller {
             List<Worker> list = gMainTable.getItems();
             if (list.isEmpty()) return;
             for (Worker wr: list) {
-                Department dep = gCompany.getDep(wr.department);
+                Department dep = gCompany.getDep(wr.getDepartment());
                 gTrashList.add(wr);
                 gTrashTable.getItems().add(wr);
                 gCompany.del(wr);
@@ -366,10 +366,9 @@ public class Controller {
                     ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(sFile.getAbsolutePath()));
                     gCompany = (Company) inputStream.readObject();
                     gMainTable.getItems().clear();
-                    for (Worker wr : gCompany.getMap().values()) {
-                        gSecondTable.getItems().add(gCompany.getDep(wr.department));
-                        gMainTable.getItems().add(wr);
-                    }
+                    gMainTable.getItems().addAll(gCompany.getMap().values());
+                    gSecondTable.getItems().addAll(gCompany.getSet());
+
                     isSave.setText("Сохранено");
                     statistic.setText(Integer.toString(middleSalary()));
 

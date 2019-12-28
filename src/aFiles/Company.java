@@ -7,8 +7,8 @@ public class Company implements Serializable{
 
     private static final long serialVersionUID = 4020926496140356425L;
 
-    Map<Integer, Worker> map;
-    Set<Department> set;
+    private Map<Integer, Worker> map;
+    private Set<Department> set;
 
     public Company(){
         map = new TreeMap<>();
@@ -18,14 +18,16 @@ public class Company implements Serializable{
     public Map<Integer, Worker> getMap() {
         return map;
     }
-
+    public Set<Department> getSet() {
+        return set;
+    }
     public boolean add(Worker wrk){
-        if (!map.containsKey(wrk.id)) {
-            if (containsDep(wrk.department)) {
-                Department dep = getDep(wrk.department);
-                dep.updateUp(wrk.salary);
-            } else set.add(new Department(wrk.department, wrk.salary));
-            map.put(wrk.id, wrk);
+        if (!map.containsKey(wrk.getId())) {
+            if (containsDep(wrk.getDepartment())) {
+                Department dep = getDep(wrk.getDepartment());
+                dep.updateUp(wrk.getSalary());
+            } else set.add(new Department(wrk.getDepartment(), wrk.getSalary()));
+            map.put(wrk.getId(), wrk);
             return true;
         }
 
@@ -52,16 +54,16 @@ public class Company implements Serializable{
     }
 
     public void del(Worker wr) {
-        Department dep = getDep(wr.department);
-        dep.updateDown(wr.salary);
+        Department dep = getDep(wr.getDepartment());
+        dep.updateDown(wr.getSalary());
         if (dep.isEmpty()) set.remove(dep);
-        map.remove(wr.id);
+        map.remove(wr.getId());
     }
 
     public double getMiddleSalary() {
         int data = 0, count = 0;
         for (Worker wr: map.values()){
-            data += wr.salary;
+            data += wr.getSalary();
             count++;
         }
         if (count == 0) return 0;

@@ -6,10 +6,10 @@ public class Worker implements Serializable, Comparable<Worker> {
 
     private static final long serialVersionUID = 3193522421923157206L;
 
-    public int id;
-    public String lName, fName, sName;
-    public int salary;
-    public String department;
+    private int id;
+    private String lName, fName, sName;
+    private int salary;
+    private String department;
 
     public Worker() {
         id = 0;
@@ -62,15 +62,15 @@ public class Worker implements Serializable, Comparable<Worker> {
         this.id = id;
     }
 
-    public void setfName(String fName) {
+    public void setFName(String fName) {
         this.fName = fName;
     }
 
-    public void setlName(String lName) {
+    public void setLName(String lName) {
         this.lName = lName;
     }
 
-    public void setsName(String sName) {
+    public void setSName(String sName) {
         this.sName = sName;
     }
 

@@ -83,8 +83,8 @@ public class ControllerDeleted {
                 if (gCompany.add(temp)){
                     gIsSave.setText("Не сохранено");
                     gMainTable.getItems().add(temp);
-                    if (gCompany.getDep(temp.department).getQuantity() == 1) {
-                        gSecondTable.getItems().add(gCompany.getDep(temp.department));
+                    if (gCompany.getDep(temp.getDepartment()).getQuantity() == 1) {
+                        gSecondTable.getItems().add(gCompany.getDep(temp.getDepartment()));
                     }
                     else {
                         gSecondTable.refresh();

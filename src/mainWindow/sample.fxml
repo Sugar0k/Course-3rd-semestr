@@ -64,7 +64,7 @@
                               <Insets left="10.0" />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="fileLocation" prefHeight="18.0" prefWidth="371.0" text="Путь файла">
+                        <Label fx:id="fileLocation" text="Путь файла">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>

@@ -39,6 +39,7 @@ public class Other {
         return tableView;
     }
 
+
     public static void addColumnI(TableView tableView, String s1, String s2, boolean sortable){
         TableColumn<Worker, Integer> column = new TableColumn<>(s1);
         column.setCellValueFactory(new PropertyValueFactory<>(s2));
@@ -81,11 +82,11 @@ public class Other {
 
     public static int middleSalary() {
         List<Worker> list = gMainTable.getItems();
+        if (list.size() == 0) return 0;
         int salary = 0;
         for (Worker wr: list) {
-            salary+= wr.salary;
+            salary+= wr.getSalary();
         }
-        if (list.size() == 0) return 0;
         return salary / list.size();
     }
 }
